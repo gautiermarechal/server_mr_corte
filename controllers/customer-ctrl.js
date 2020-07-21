@@ -105,7 +105,7 @@ getCustomerByID = async (req, res) => {
 }
 
 getCustomerByEmail = async (req, res) => {
-    await Customer.findOne({ _email: req.params.email }, (err, customer) => {
+    await Customer.findOne({ email: req.params.email }, (err, customer) => {
         if (err) {
             return res.status(400).json({ success: false, error: err })
         }
