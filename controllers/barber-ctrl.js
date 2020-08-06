@@ -63,8 +63,51 @@ getBarbers = async (req, res) => {
     }).catch(err => console.log(err))
 }
 
+updateBarber = async (req, res) => {
+    const body = req.body
+
+    if (!body) {
+        return res.status(400).json({
+            success: false,
+            error: 'You must provide a body to update',
+        })
+    }
+
+    Barber.findOne({ _id: req.params.id }, (err, barber) => {
+        if (err) {
+            return res.status(404).json({
+                err,
+                message: 'Barber not found!',
+            })
+        }
+        barber.firstName = body.firstName
+        barber.lastName = body.lastName
+        barber.email = body.email
+        barber.password = body.password,
+        barber.isAdmin = body.isAdmin,
+        barber.availableTimes = body.availableTimes,
+        barber.appointments = body.appointments
+        barber
+            .save()
+            .then(() => {
+                return res.status(200).json({
+                    success: true,
+                    id: customer._id,
+                    message: 'Barber updated!',
+                })
+            })
+            .catch(error => {
+                return res.status(404).json({
+                    error,
+                    message: 'Barber not updated!',
+                })
+            })
+    })
+}
+
 module.exports = {
     createBarber,
     getBarberByID,
-    getBarbers
+    getBarbers,
+    updateBarber
 }
