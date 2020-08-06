@@ -7,6 +7,7 @@ const Customer = new Schema(
         lastName: { type: String },
         email: { type: String },
         password: { type: String },
+        appointments: { type: Array }
     },
     { timestamps: true },
 );

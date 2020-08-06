@@ -49,11 +49,11 @@ getAppointmentByID = async (req, res) => {
 }
 
 getAppointments = async (req, res) => {
-    await Appointment.find({}, (err, appointment) => {
+    await Appointment.find({}, (err, appointments) => {
         if (err) {
             return res.status(400).json({ success: false, error: err })
         }
-        if (!appointment.length) {
+        if (!appointments.length) {
             return res
                 .status(404)
                 .json({ success: false, error: `Appointment not found` })
