@@ -49,6 +49,21 @@ getBarberByID = async (req, res) => {
     }).catch(err => console.log(err))
 }
 
+getBarberByEmail = async (req, res) => {
+    await Barber.findOne({ email: req.params.email }, (err, barber) => {
+        if (err) {
+            return res.status(400).json({ success: false, error: err })
+        }
+
+        if (!barber) {
+            return res
+                .status(404)
+                .json({ success: false, error: `Barber not found` })
+        }
+        return res.status(200).json({ success: true, data: barber })
+    }).catch(err => console.log(err))
+}
+
 getBarbers = async (req, res) => {
     await Barber.find({}, (err, barbers) => {
         if (err) {
@@ -108,6 +123,7 @@ updateBarber = async (req, res) => {
 module.exports = {
     createBarber,
     getBarberByID,
+    getBarberByEmail,
     getBarbers,
     updateBarber
 }
